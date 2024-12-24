@@ -10,11 +10,8 @@
               style="display: flex; text-decoration: none"
               @click="showPage('home')"
             >
-              <i
-                :style="{ color: currentPage === 'home' ? 'red' : 'white' }"
-                class="fas fa-home"
-              ></i>
               <h3 :style="{ color: currentPage === 'home' ? 'red' : 'white' }">
+                <i class="fas fa-home"></i>
                 Accueil
               </h3>
             </button>
@@ -26,11 +23,8 @@
               style="display: flex; text-decoration: none"
               @click="showPage('fournisseur')"
             >
-              <i
-                :style="{ color: currentPage === 'fournisseur' ? 'red' : 'white' }"
-                class="fas fa-file-alt"
-              ></i>
               <h3 :style="{ color: currentPage === 'fournisseur' ? 'red' : 'white' }">
+                <i class="fas fa-file-alt"></i>
                 Fournisseur
               </h3>
             </button>
@@ -43,11 +37,8 @@
               style="display: flex; text-decoration: none"
               @click="showPage('factures')"
             >
-              <i
-                :style="{ color: currentPage === 'factures' ? 'red' : 'white' }"
-                class="fa fa-users"
-              ></i>
               <h3 :style="{ color: currentPage === 'factures' ? 'red' : 'white' }">
+                <i class="fa fa-users"></i>
                 Factures
               </h3>
             </button>
@@ -60,11 +51,8 @@
               style="display: flex; text-decoration: none"
               @click="showPage('commandes')"
             >
-              <i
-                :style="{ color: currentPage === 'commandes' ? 'red' : 'white' }"
-                class="fas fa-bullhorn"
-              ></i>
               <h3 :style="{ color: currentPage === 'commandes' ? 'red' : 'white' }">
+                <i class="fas fa-bullhorn"></i>
                 Commandes
               </h3>
             </button>
@@ -76,11 +64,8 @@
               style="display: flex; text-decoration: none"
               @click="showPage('stocks')"
             >
-              <i
-                :style="{ color: currentPage === 'stocks' ? 'red' : 'white' }"
-                class="fas fa-envelope"
-              ></i>
               <h3 :style="{ color: currentPage === 'stocks' ? 'red' : 'white' }">
+                <i class="fas fa-envelope"></i>
                 Stocks
               </h3>
             </button>
@@ -93,11 +78,8 @@
               style="display: flex; text-decoration: none"
               @click="showPage('comptes')"
             >
-              <i
-                :style="{ color: currentPage === 'comptes' ? 'red' : 'white' }"
-                class="fas fa-star"
-              ></i>
               <h3 :style="{ color: currentPage === 'comptes' ? 'red' : 'white' }">
+                <i class="fas fa-star"></i>
                 Comptes
               </h3>
             </button>
@@ -107,7 +89,7 @@
     </div>
     <div class="extra">
       <div class="page" v-if="currentPage === 'home'">0</div>
-      
+
       <div class="page" v-if="currentPage === 'commandes'">10</div>
       <div class="page" v-if="currentPage === 'fournisseur'">1</div>
       <div class="page" v-if="currentPage === 'comptes'">2</div>
@@ -148,24 +130,31 @@ export default {
   width: 75%;
   height: 95vh;
   background-color: white;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.608);
 }
 .side_barre {
   width: 22%;
   height: 95vh;
-  background-color: black;
+  background-color: rgb(0, 0, 0);
 }
 .side_barre li {
   list-style: none;
+  width: 70%;
+  margin: 0;
 }
 .side_barre ul {
-  padding-top: 150px;
+  margin-top: 130px;
 }
 .side_barre button {
-  list-style: none;
-  background-color: transparent;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
   color: white;
   border: none;
   font-size: 15px;
+  background-color: transparent;
+}
+.side_barre button i {
+  margin-right: 15px;
 }
 </style>
