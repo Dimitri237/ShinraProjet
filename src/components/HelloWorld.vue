@@ -166,6 +166,6 @@ export default {
   background-color: transparent;
   color: white;
   border: none;
-  font-size: 20px;
+  font-size: 15px;
 }
 </style>
