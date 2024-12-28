@@ -88,7 +88,7 @@
       </nav>
     </div>
     <div class="extra">
-      <div class="page" v-if="currentPage === 'home'">0</div>
+      <div class="page" v-if="currentPage === 'home'"> <StockPage/> </div>
 
       <div class="page" v-if="currentPage === 'commandes'">10</div>
       <div class="page" v-if="currentPage === 'fournisseur'">1</div>
@@ -102,10 +102,14 @@
 </template>
 
 <script>
+import StockPage from "./StockPage.vue";
 export default {
-  components: {},
+  components: {
+    StockPage
+  },
   data() {
     return {
+
       currentPage: "home",
     };
   },
@@ -158,3 +162,4 @@ export default {
   margin-right: 15px;
 }
 </style>
+
