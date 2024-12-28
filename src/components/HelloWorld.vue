@@ -104,7 +104,6 @@
 <script>
 import PageCompte from "./PageCompte.vue";
 import StockPage from "./StockPage.vue";
-import moment from 'moment';
 export default {
   components: {
     StockPage,
