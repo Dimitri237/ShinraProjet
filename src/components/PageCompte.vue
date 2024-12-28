@@ -1,31 +1,29 @@
 <template>
-  <div class="stock-manager">
-    <header>
-      <h1>Panneau de Contrôle</h1>
-    </header>
-
-    <div class="search-box">
-      <input type="text" v-model="searchQuery" placeholder="Rechercher un produit..." />
-    </div>
-
-    <button class="button btn-ajouter" @click="toggleForm">
-      {{
-        showForm
-          ? "Annuler"
-          : isEditing
-          ? "Modifier un Produit"
-          : "Ajouter un utilisateur"
-      }}
-    </button>
-
-    <div class="form-container" v-if="showForm">
-      <div class="form_cont">
-        <h2>{{ isEditing ? "Modifier le Produit" : "Ajouter un Produit" }}</h2>
+    <div class="stock-manager">
+      <header>
+        <h1>Panneau de Contrôle</h1>
+      </header>
+  
+      <div class="search-box">
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="Rechercher un produit..."
+        />
+      </div>
+  
+      <button class="button btn-ajouter" @click="toggleForm">
+        {{ showForm ? 'Annuler' : (isEditing ? 'Modifier un Produit' : 'Ajouter un utilisateur') }}
+      </button>
+  
+      <div class="form-container" v-if="showForm">
+        <div class="form_cont">
+          <h2>{{ isEditing ? 'Modifier le Produit' : 'Ajouter un Produit' }}</h2>
         <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
           <div>
             <p class="graph">
-              <input v-model="newProduct.name" placeholder="Nom" required />
-              <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
+          <input v-model="newProduct.name" placeholder="Nom" required />
+         <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
             </p>
           </div>
           <div>
@@ -55,23 +53,13 @@
           </div>
           <div>
             <p class="graph">
-              <input
-                v-model="newProduct.inscriptionDate"
-                type="date"
-                placeholder="Date d'inscription"
-                required
-              />
+          <input v-model="newProduct.inscriptionDate" type="date" placeholder="Date d'inscription" required />
             </p>
           </div>
           <div>
             <p class="graph">
-              <input
-                v-model="newProduct.adrressmail"
-                type="text"
-                placeholder="Addresse mail"
-                required
-              />
-            </p>
+          <input v-model="newProduct.adrressmail" type="text" placeholder="Addresse mail" required />
+          </p>
           </div>
           <div style="display: flex; justify-content: space-around; width: 100%">
             <button type="submit" class="button btn-ajouter">
@@ -87,46 +75,42 @@
             </button>
           </div>
         </form>
+        </div>
       </div>
+  
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th>Nom</th>
+              <th>Prénom</th>
+              <th>Age</th>
+              <th>Adresse</th>
+              <th>Date d'inscription</th>
+              <th>Adresse mail</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="product in filteredProducts" :key="product.reference">
+              <td>{{ product.nom }}</td>
+              <td>{{ product.prenom }}</td>
+              <td>{{ product.adresse }}</td>
+              <td>{{ product.age }} MAD</td>
+              <td>{{ product.inscriptionDate }}</td>
+              <td>{{ product.adrressmail }}</td>
+              <td>
+                <button class="button btn-modifier" @click="editProduct(product)">Modifier</button>
+                <button class="button btn-supprimer" @click="deleteProduct(product)">Supprimer</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+  
+      <div v-if="notification" class="notification">{{ notification }}</div>
     </div>
-
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Age</th>
-            <th>Adresse</th>
-            <th>Date d'inscription</th>
-            <th>Adresse mail</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="product in filteredProducts" :key="product.reference">
-            <td>{{ product.nom }}</td>
-            <td>{{ product.prenom }}</td>
-            <td>{{ product.adresse }}</td>
-            <td>{{ product.age }} MAD</td>
-            <td>{{ product.inscriptionDate }}</td>
-            <td>{{ product.adrressmail }}</td>
-            <td>
-              <button class="button btn-modifier" @click="editProduct(product)">
-                Modifier
-              </button>
-              <button class="button btn-supprimer" @click="deleteProduct(product)">
-                Supprimer
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div v-if="notification" class="notification">{{ notification }}</div>
-  </div>
-</template>
+  </template>
 
 <script>
 import moment from 'moment';
@@ -210,23 +194,29 @@ export default {
 
 <style scoped>
 .stock-manager {
-  padding: 20px;
+  width: 100%;
   background-color: #f4f4f4;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-header {
+.title {
   background-color: #ff4757;
   color: white;
-  padding: 10px;
   text-align: center;
   width: 100%;
+  margin: 0;
+  padding: 10px 0;
 }
 
 .search-box {
   margin: 20px 0;
+  width: 98%;
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10px;
 }
 
 .form-container {
@@ -256,7 +246,7 @@ header {
   color: #28a745;
 }
 .table-container {
-  width: 80%;
+  width: 100%;
   overflow-x: auto;
 }
 
@@ -286,7 +276,21 @@ th {
 
 .btn-ajouter {
   background-color: #28a745;
+  font-weight: bold;
+  font-size: 17px;
   color: white;
+  height: 40px;
+  width: 30%;
+  border-radius: 10px;
+  
+}
+.seach{
+  width: 60%;
+  height: 40px;
+  outline: none;
+  border-radius: 10px;
+  padding-left: 10px;
+  border: none;
 }
 
 .btn-modifier {
