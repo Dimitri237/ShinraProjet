@@ -10,7 +10,7 @@
               style="display: flex; text-decoration: none"
               @click="showPage('home')"
             >
-              <h3 :style="{ color: currentPage === 'home' ? 'red' : 'white' }">
+              <h3 :style="{ color: currentPage === 'home' ? '#e74c3c' : 'white' }">
                 <i class="fas fa-home"></i>
                 Accueil
               </h3>
@@ -23,7 +23,7 @@
               style="display: flex; text-decoration: none"
               @click="showPage('fournisseur')"
             >
-              <h3 :style="{ color: currentPage === 'fournisseur' ? 'red' : 'white' }">
+              <h3 :style="{ color: currentPage === 'fournisseur' ? '#e74c3c' : 'white' }">
                 <i class="fas fa-file-alt"></i>
                 Fournisseur
               </h3>
@@ -37,7 +37,7 @@
               style="display: flex; text-decoration: none"
               @click="showPage('factures')"
             >
-              <h3 :style="{ color: currentPage === 'factures' ? 'red' : 'white' }">
+              <h3 :style="{ color: currentPage === 'factures' ? '#e74c3c' : 'white' }">
                 <i class="fa fa-users"></i>
                 Factures
               </h3>
@@ -51,7 +51,7 @@
               style="display: flex; text-decoration: none"
               @click="showPage('commandes')"
             >
-              <h3 :style="{ color: currentPage === 'commandes' ? 'red' : 'white' }">
+              <h3 :style="{ color: currentPage === 'commandes' ? '#e74c3c' : 'white' }">
                 <i class="fas fa-bullhorn"></i>
                 Commandes
               </h3>
@@ -64,7 +64,7 @@
               style="display: flex; text-decoration: none"
               @click="showPage('stocks')"
             >
-              <h3 :style="{ color: currentPage === 'stocks' ? 'red' : 'white' }">
+              <h3 :style="{ color: currentPage === 'stocks' ? '#e74c3c' : 'white' }">
                 <i class="fas fa-envelope"></i>
                 Stocks
               </h3>
@@ -78,7 +78,7 @@
               style="display: flex; text-decoration: none"
               @click="showPage('comptes')"
             >
-              <h3 :style="{ color: currentPage === 'comptes' ? 'red' : 'white' }">
+              <h3 :style="{ color: currentPage === 'comptes' ? '#e74c3c' : 'white' }">
                 <i class="fas fa-star"></i>
                 Comptes
               </h3>
