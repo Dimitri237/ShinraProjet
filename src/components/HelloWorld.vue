@@ -103,6 +103,7 @@
 
 <script>
 import StockPage from "./StockPage.vue";
+import moment from 'moment';
 export default {
   components: {
     StockPage
