@@ -22,7 +22,7 @@
         <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
           <div>
             <p class="graph">
-          <input v-model="newProduct.name" placeholder="Nom" required />
+          <input v-model="newProduct.name" type="text" placeholder="Nom" required />
          <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
             </p>
           </div>
@@ -122,12 +122,12 @@ export default {
       isEditing: false,
       notification: "",
       newProduct: {
-        name: "",
+        name: '',
         quantity: 0,
-        reference: "",
-        price: 0.0,
-        importDate: "",
-        expirationDate: "",
+        reference: '',
+        price: 0.00,
+        importDate: '',
+        expirationDate: '',
       },
       products: [],
     };
@@ -179,12 +179,12 @@ export default {
     },
     resetForm() {
       this.newProduct = {
-        name: "",
+        name: '',
         quantity: 0,
-        reference: "",
-        price: 0.0,
-        importDate: "",
-        expirationDate: "",
+        reference: '',
+        price: 0.00,
+        importDate: '',
+        expirationDate: '',
       };
       this.isEditing = false; // Réinitialise le mode d'édition
     },
