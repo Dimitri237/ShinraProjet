@@ -92,7 +92,7 @@
 
       <div class="page" v-if="currentPage === 'commandes'">10</div>
       <div class="page" v-if="currentPage === 'fournisseur'">1</div>
-      <div class="page" v-if="currentPage === 'comptes'">2</div>
+      <div class="page" v-if="currentPage === 'comptes'"> <PageCompte /> </div>
       <div class="page" v-if="currentPage === 'process'">3</div>
       <div class="page" v-if="currentPage === 'factures'">4</div>
       <div class="page" v-if="currentPage === 'profil'">5</div>
@@ -102,16 +102,18 @@
 </template>
 
 <script>
+import PageCompte from "./PageCompte.vue";
 import StockPage from "./StockPage.vue";
 import moment from 'moment';
 export default {
   components: {
-    StockPage
+    StockPage,
+    PageCompte
+    
   },
   data() {
     return {
-
-      currentPage: "home",
+      currentPage: "home"
     };
   },
   mounted() {},
