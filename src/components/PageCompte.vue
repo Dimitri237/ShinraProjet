@@ -55,8 +55,8 @@
           <tr>
             <th>Nom</th>
             <th>Prénom</th>
-            <th>Age</th>
             <th>Adresse</th>
+            <th>Age</th>
             <th>Date d'inscription</th>
             <th>Adresse mail</th>
             <th>Actions</th>
@@ -67,7 +67,7 @@
             <td>{{ product.nom }}</td>
             <td>{{ product.prenom }}</td>
             <td>{{ product.adresse }}</td>
-            <td>{{ product.age }} MAD</td>
+            <td>{{ product.age }} ans</td>
             <td>{{ product.inscriptionDate }}</td>
             <td>{{ product.adrressmail }}</td>
             <td>
@@ -86,19 +86,19 @@
 <script>
 import moment from 'moment';
 export default {
-  data() {
-    return {
-      searchQuery: '',
-      showForm: false,
-      isEditing: false,
-      notification: '',
-      newProduct: {
-        nom: '',
-        prenom: 0,
-        age: '',
-        adresse: '',
-        adrressmail: '',
-        inscriptionDate: moment().format(),
+data() {
+  return {
+    searchQuery: '',
+    showForm: false,
+    isEditing: false,
+    notification: '',
+    newProduct: {
+      nom: '',
+      prenom: 0,
+      age: '',
+      adresse: '',
+      adrressmail: '',
+      inscriptionDate: moment().format(),
 
       },
       products: [],
