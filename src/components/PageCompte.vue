@@ -57,8 +57,8 @@
           <tr>
             <th>Nom</th>
             <th>Prénom</th>
-            <th>Age</th>
             <th>Adresse</th>
+            <th>Age</th>
             <th>Date d'inscription</th>
             <th>Adresse mail</th>
             <th>Actions</th>
@@ -69,7 +69,7 @@
             <td>{{ product.nom }}</td>
             <td>{{ product.prenom }}</td>
             <td>{{ product.adresse }}</td>
-            <td>{{ product.age }} MAD</td>
+            <td>{{ product.age }} ans</td>
             <td>{{ product.inscriptionDate }}</td>
             <td>{{ product.adrressmail }}</td>
             <td>
@@ -96,7 +96,7 @@ data() {
     notification: '',
     newProduct: {
       nom: '',
-      prenom: 0,
+      prenom: '',
       age: '',
       adresse: '',
       adrressmail: '',
