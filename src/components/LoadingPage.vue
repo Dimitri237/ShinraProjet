@@ -1,8 +1,6 @@
 <template>
-  <div class="splash-screen">
-    <h1 class="animate__animated animate__fadeInDown">INVENTORY</h1>
-    <h2 class="animate__animated animate__fadeInUp">Manager</h2>
-
+  <div class="loading-indicator">
+    <!-- Indicateur de chargement, vous pouvez personnaliser cet élément -->
   </div>
 </template>
 
@@ -10,30 +8,37 @@
 export default {
   mounted() {
     setTimeout(() => {
-      this.$router.push('/AuthPage');
+      this.$router.push('/home');
     }, 4000);
   },
 };
 </script>
 
 <style scoped>
-.splash-screen {
-  height: 100vh; 
-  width: 100%;
+
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    margin-top: 40vh!important;
 }
-h1{
-  color: #ff4757;
-  font-size: 100px;
-  width: 100%;
-  text-align: center;
-  font-family: Montserrat, sans-serif;
-  margin-top: 200px;
+
+.loading-indicator::after {
+    content: "";
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 13px solid white;
+    border-top-color: #ff4757;
+    border-bottom-color: #ff4757;
+    animation: spin 1s linear infinite;
 }
-h2{
-  color: black;
-  font-size: 50px;
-  width: 100%;
-  text-align: center;
-  font-family: Montserrat, sans-serif;
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
 </style>

@@ -10,7 +10,10 @@
                 <h3 for="">Password</h3>
                 <input type="text" name="" id="">
             </div>
-            <input class="btn" value="Se connecter" type="submit" name="" id="">
+            <button @click="setTimeout" class="btn" type="submit" :disabled="loading">
+                <span class="loading-indicator" v-if="loading"></span>
+                <span style="font-size: 20px;" v-else>Connexion</span>
+            </button>
         </form>
     </div>
 </template>
@@ -18,13 +21,19 @@
 export default {
     data() {
         return {
-
+            loading: false,
         };
     },
     methods: {
         login() {
-            this.$router.push('/HelloWorld');
+            this.loading = true;
+
+            // this.$router.push('/HelloWorld');
+            setTimeout(() => {
+                this.$router.push('/HelloWorld');
+            }, 4000);
         },
+
     },
 };
 </script>
@@ -78,9 +87,33 @@ h3 {
     margin: 35px;
     border: none;
     font-size: 15px;
-    color: white;
-    background-color: #ff4757;
+    color: #ff4757;
+    background-color: white;
     font-weight: bold;
     padding: 10px 20px;
+}
+
+.loading-indicator::after {
+    content: "";
+    display: inline-block;
+    width: 23px;
+    height: 23px;
+    border-radius: 50%;
+    border: 3px solid #ff4757;
+    border-top-color: white;
+    border-bottom-color: white;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    height: 100px;
 }
 </style>
