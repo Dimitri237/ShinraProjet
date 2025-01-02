@@ -16,30 +16,26 @@
         <h2>{{ isEditing ? 'Modifier le Produit' : 'Ajouter un Produit' }}</h2>
         <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
           <div>
-            <p class="graph">
+
               <input v-model="newProduct.nom" type="text" placeholder="Nom" required />
               <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
-            </p>
           </div>
           <div>
-            <p class="graph"><input v-model="newProduct.prenom" type="text" placeholder="Prénom" required /> </p>
+            <input v-model="newProduct.prenom" type="text" placeholder="Prénom" required />
           </div>
           <div>
-            <p class="graph">
+
               <input v-model="newProduct.age" type="number" placeholder="Age" required />
-            </p>
           </div>
           <div>
-            <p class="graph">
+
               <input v-model="newProduct.adresse" type="text" placeholder="Addresse" required />
-            </p>
           </div>
           <div>
-            <p class="graph">
+
               <input v-model="newProduct.adrressmail" type="email" placeholder="Addresse mail" required />
-            </p>
           </div>
-          <div style="display: flex; justify-content: space-around; width: 100%;">
+          <div class="btn_sect" style="display: flex; justify-content: space-around; width: 100%;">
             <button type="submit" class="button btn-ajouter">{{ isEditing ? 'Mettre à Jour' : 'Ajouter un utilisateur'
               }}</button>
             <button @click="close" style="background-color: red;" type="submit"
@@ -86,19 +82,19 @@
 <script>
 import moment from 'moment';
 export default {
-data() {
-  return {
-    searchQuery: '',
-    showForm: false,
-    isEditing: false,
-    notification: '',
-    newProduct: {
-      nom: '',
-      prenom: 0,
-      age: '',
-      adresse: '',
-      adrressmail: '',
-      inscriptionDate: moment().format(),
+  data() {
+    return {
+      searchQuery: '',
+      showForm: false,
+      isEditing: false,
+      notification: '',
+      newProduct: {
+        nom: '',
+        prenom: 0,
+        age: '',
+        adresse: '',
+        adrressmail: '',
+        inscriptionDate: moment().format(),
 
       },
       products: [],
@@ -199,26 +195,12 @@ data() {
 }
 
 .form_cont {
-  background-color: rgb(243, 235, 235);
+  background-color: white;
   width: 30%;
   margin: auto;
   margin-top: 10% !important;
-  border-radius: 30px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
-
-.form-container input {
-  margin: 5px;
-  padding: 10px;
-  width: 200px;
-  /* Ajuste la largeur selon tes besoins */
-}
-
-/* test classe graph*/
-.graph {
-  color: #28a745;
-}
-
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -243,11 +225,12 @@ th {
 .button {
   padding: 5px 10px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   margin: 10px 0;
 }
-
+.btn_sect button{
+  width: 40%;
+}
 .btn-ajouter {
   background-color: #28a745;
   font-weight: bold;
@@ -255,7 +238,6 @@ th {
   color: white;
   height: 40px;
   width: 30%;
-  border-radius: 10px;
 
 }
 
@@ -263,7 +245,6 @@ th {
   width: 60%;
   height: 40px;
   outline: none;
-  border-radius: 10px;
   padding-left: 10px;
   border: none;
 }
@@ -287,5 +268,43 @@ th {
   border-radius: 5px;
   width: 80%;
   text-align: center;
+}
+
+
+.inp_group {
+  margin-top: 30px;
+}
+
+h3 {
+  text-align: left;
+  width: 90%;
+  margin: auto;
+  color: #17151691;
+}
+
+.form-container h2 {
+    width: 100%;
+    text-align: center;
+    background-color: #ff4757;
+    padding: 10px 0;
+    color: white;
+
+}
+
+.form-container form {
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+
+
+}
+
+.form-container input {
+    width: 90%;
+    margin: 5px 0;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #0606068a;
 }
 </style>

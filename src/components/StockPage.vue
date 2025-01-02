@@ -18,57 +18,45 @@
         <h2>{{ isEditing ? "Modifier le Produit" : "Ajouter un Produit" }}</h2>
         <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
           <div>
-            <p class="graph">
               <input v-model="newProduct.name" placeholder="Désignation" required />
               <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
-            </p>
           </div>
           <div>
-            <p class="graph">
               <input v-model="newProduct.reference" placeholder="Référence" required />
-            </p>
           </div>
           <div>
-            <p class="graph">
               <input
                 v-model="newProduct.quantity"
                 type="number"
                 placeholder="Quantité"
                 required
               />
-            </p>
           </div>
           <div>
-            <p class="graph">
               <input
                 v-model="newProduct.price"
                 type="number"
                 placeholder="Prix Unitaire"
                 required
               />
-            </p>
           </div>
           <div>
-            <p class="graph">
               <input
                 v-model="newProduct.importDate"
                 type="date"
                 placeholder="Date d'Importation"
                 required
               />
-            </p>
           </div>
           <div>
-            <p class="graph">
               <input
                 v-model="newProduct.expirationDate"
                 type="date"
                 placeholder="Date d'Expiration"
                 required
               />
-            </p>
           </div>
-          <div style="display: flex; justify-content: space-around; width: 100%">
+          <div class="btn_sect" style="display: flex; margin-top: 20px; justify-content: space-around; width: 100%">
             <button type="submit" class="button btn-ajouter">
               {{ isEditing ? "Mettre à Jour" : "Ajouter le Produit" }}
             </button>
@@ -133,9 +121,9 @@ export default {
       notification: "",
       newProduct: {
         name: "",
-        quantity: 0,
+        quantity: "",
         reference: "",
-        price: 0.0,
+        price: "",
         importDate: "",
         expirationDate: "",
       },
@@ -190,9 +178,9 @@ export default {
     resetForm() {
       this.newProduct = {
         name: "",
-        quantity: 0,
+        quantity: "",
         reference: "",
-        price: 0.0,
+        price: "",
         importDate: "",
         expirationDate: "",
       };
@@ -238,22 +226,11 @@ export default {
   height: 100vh;
 }
 .form_cont {
-  background-color: rgb(243, 235, 235);
+  background-color: white;
   width: 30%;
   margin: auto;
   margin-top: 10% !important;
-  border-radius: 30px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-}
-.form-container input {
-  margin: 5px;
-  padding: 10px;
-  width: 200px; /* Ajuste la largeur selon tes besoins */
-}
-
-/* test classe graph*/
-.graph {
-  color: #28a745;
 }
 .table-container {
   width: 100%;
@@ -279,9 +256,11 @@ th {
 .button {
   padding: 5px 10px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
   margin: 10px 0;
+}
+.btn_sect button{
+  width: 40%;
 }
 
 .btn-ajouter {
@@ -291,14 +270,12 @@ th {
   color: white;
   height: 40px;
   width: 30%;
-  border-radius: 10px;
   
 }
 .seach{
   width: 60%;
   height: 40px;
   outline: none;
-  border-radius: 10px;
   padding-left: 10px;
   border: none;
 }
@@ -321,5 +298,51 @@ th {
   border-radius: 5px;
   width: 80%;
   text-align: center;
+}
+
+.container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 30%;
+    margin: auto;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    margin-top: 20vh;
+
+}
+
+.inp_group {
+    margin-top: 30px;
+}
+
+h3 {
+    text-align: left;
+    width: 90%;
+    margin: auto;
+    color: #17151691;
+}
+
+.form-container h2 {
+    width: 100%;
+    text-align: center;
+    background-color: #ff4757;
+    padding: 10px 0;
+    color: white;
+
+}
+
+.form-container form {
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+
+
+}
+
+.form-container input {
+    width: 90%;
+    margin: 5px 0;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #0606068a;
 }
 </style>
