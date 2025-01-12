@@ -3,7 +3,7 @@
     <h1 class="title">Panneau de Contrôle</h1>
 
     <div class="search-box">
-      <input class="seach" type="text" v-model="searchQuery" placeholder="Rechercher un produit..." />
+      <input class="seach" type="text" v-model="searchQuery" placeholder="Rechercher un utilisateur..." />
       <button class="button btn-ajouter" @click="toggleForm">
         {{ showForm ? 'Annuler' : (isEditing ? 'Modifier un Produit' : 'Ajouter un utilisateur') }}
       </button>
@@ -13,27 +13,27 @@
 
     <div class="form-container" v-if="showForm">
       <div class="form_cont">
-        <h2>{{ isEditing ? 'Modifier le Produit' : 'Ajouter un Produit' }}</h2>
-        <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
+        <h2>{{ isEditing ? 'Modifier utilisateur' : 'Ajouter un Utilisateur' }}</h2>
+        <form @submit.prevent="isEditing ? updateProduct() :  addUser()"> <!-- isEditing ? updateProduct() :-->    
           <div>
 
-              <input v-model="newProduct.nom" type="text" placeholder="Nom" required />
-              <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
+            <input v-model="form.nom" type="text" placeholder="Nom" required />
+            <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
           </div>
           <div>
-            <input v-model="newProduct.prenom" type="text" placeholder="Prénom" required />
-          </div>
-          <div>
-
-              <input v-model="newProduct.age" type="number" placeholder="Age" required />
+            <input v-model="form.prenom" type="text" placeholder="Prénom" required />
           </div>
           <div>
 
-              <input v-model="newProduct.adresse" type="text" placeholder="Addresse" required />
+            <input v-model="form.age" type="number" placeholder="Age" required />
           </div>
           <div>
 
-              <input v-model="newProduct.adrressmail" type="email" placeholder="Addresse mail" required />
+            <input v-model="form.adresse" type="text" placeholder="Addresse" required />
+          </div>
+          <div>
+
+            <input v-model="form.addressmail" type="email" placeholder="Addresse mail" required />
           </div>
           <div class="btn_sect" style="display: flex; justify-content: space-around; width: 100%;">
             <button type="submit" class="button btn-ajouter">{{ isEditing ? 'Mettre à Jour' : 'Ajouter un utilisateur'
@@ -53,22 +53,22 @@
             <th>Prénom</th>
             <th>Adresse</th>
             <th>Age</th>
-            <th>Date d'inscription</th>
+            <th>Date inscription</th>
             <th>Adresse mail</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in filteredProducts" :key="product.reference">
-            <td>{{ product.nom }}</td>
-            <td>{{ product.prenom }}</td>
-            <td>{{ product.adresse }}</td>
-            <td>{{ product.age }} ans</td>
-            <td>{{ product.inscriptionDate }}</td>
-            <td>{{ product.adrressmail }}</td>
+          <tr v-for="user in filteredProducts" :key="user.reference">
+            <td>{{ user.nom }}</td>
+            <td>{{ user.prenom }}</td>
+            <td>{{ user.adresse }}</td>
+            <td>{{ user.age }} ans</td>
+            <td>{{ user.datecreation }}</td>
+            <td>{{ user.addressmail }}</td>
             <td>
-              <button class="button btn-modifier" @click="editProduct(product)">Modifier</button>
-              <button class="button btn-supprimer" @click="deleteProduct(product)">Supprimer</button>
+              <button class="button btn-modifier" @click="editProduct(user)">Modifier</button>
+              <button class="button btn-supprimer" @click="deleteProduct(user)">Supprimer</button>
             </td>
           </tr>
         </tbody>
@@ -80,7 +80,8 @@
 </template>
 
 <script>
-import moment from 'moment';
+//import moment from 'moment';
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -88,23 +89,23 @@ export default {
       showForm: false,
       isEditing: false,
       notification: '',
-      newProduct: {
+      form: {
         nom: '',
-        prenom: 0,
+        prenom: "",
         age: '',
         adresse: '',
-        adrressmail: '',
-        inscriptionDate: moment().format(),
+        addressmail: '',
+        datecreation: " ", //moment().format().toString()
 
       },
-      products: [],
+      users: [],
     };
   },
   computed: {
     filteredProducts() {
-      if (!this.searchQuery) return this.products;
-      return this.products.filter(product =>
-        product.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      if (!this.searchQuery) return this.users;
+      return this.users.filter(user =>
+        user.name.toLowerCase().includes(this.searchQuery.toLowerCase())
       );
     },
   },
@@ -118,7 +119,7 @@ export default {
     close() {
       this.showForm = false;
     },
-    addProduct() {
+    /*addProduct() {
       this.products.push({ ...this.newProduct });
       this.notification = 'Produit ajouté avec succès !';
       this.resetForm();
@@ -128,29 +129,50 @@ export default {
       this.newProduct = { ...product };
       this.isEditing = true;
       this.showForm = true;
+    },*/
+    async addUser() {
+      this.users.push({ ...this.form });
+      try {
+        const response = await axios.post('http://localhost:8090/user/create', this.form);
+        console.log('Réponse du serveur : ', response.data);
+        this.notification = 'Utilisateur ajouté avec succès !';
+        this.resetForm();
+        this.showForm = false;
+
+      } catch (error) {
+        console.error('Erreur : ', error.response);
+      }
+
     },
+    editProduct(user) {
+      this.newProduct = { ...user };
+      this.isEditing = true;
+      this.showForm = true;
+    },
+
+
     updateProduct() {
-      const index = this.products.findIndex(p => p.reference === this.newProduct.reference);
+      const index = this.users.findIndex(p => p.reference === this.newProduct.reference);
       if (index !== -1) {
-        this.products.splice(index, 1, { ...this.newProduct });
+        this.users.splice(index, 1, { ...this.newProduct });
         this.notification = 'Produit mis à jour avec succès !';
         this.resetForm();
         this.showForm = false;
         this.isEditing = false;
       }
     },
-    deleteProduct(product) {
-      this.products = this.products.filter(p => p.reference !== product.reference);
-      this.notification = 'Produit supprimé avec succès !';
+    deleteProduct(user) {
+      this.users = this.users.filter(p => p.reference !== user.reference);
+      this.notification = 'Utilisateur supprimé avec succès !';
     },
     resetForm() {
       this.newProduct = {
         nom: '',
         prenom: '',
-        age: 0,
+        age: "",
         adresse: '',
-        inscriptionDate: '',
-        adrressmail: '',
+        datecreation: "",
+        addressmail: '',
       };
       this.isEditing = false; // Réinitialise le mode d'édition
     },
@@ -201,6 +223,7 @@ export default {
   margin-top: 10% !important;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
 }
+
 .table-container {
   width: 100%;
   overflow-x: auto;
@@ -228,9 +251,11 @@ th {
   cursor: pointer;
   margin: 10px 0;
 }
-.btn_sect button{
+
+.btn_sect button {
   width: 40%;
 }
+
 .btn-ajouter {
   background-color: #28a745;
   font-weight: bold;
@@ -283,28 +308,28 @@ h3 {
 }
 
 .form-container h2 {
-    width: 100%;
-    text-align: center;
-    background-color: #ff4757;
-    padding: 10px 0;
-    color: white;
+  width: 100%;
+  text-align: center;
+  background-color: #ff4757;
+  padding: 10px 0;
+  color: white;
 
 }
 
 .form-container form {
-    width: 100%;
-    margin: 0;
-    padding: 10px 0;
+  width: 100%;
+  margin: 0;
+  padding: 10px 0;
 
 
 }
 
 .form-container input {
-    width: 90%;
-    margin: 5px 0;
-    height: 30px;
-    border: none;
-    outline: none;
-    border-bottom: 1px solid #0606068a;
+  width: 90%;
+  margin: 5px 0;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-bottom: 1px solid #0606068a;
 }
 </style>
