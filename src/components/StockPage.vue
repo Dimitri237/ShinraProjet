@@ -1,71 +1,56 @@
 <template>
   <div class="stock-manager">
-      <h1 class="title">Panneau de Contrôle</h1>
+    <h1 class="title">Panneau de Contrôle</h1>
 
     <div class="search-box">
       <input class="seach" type="text" v-model="searchQuery" placeholder="Rechercher un produit..." />
       <button class="button btn-ajouter" @click="toggleForm">
-      {{
-        showForm ? "Annuler" : isEditing ? "Modifier un Produit" : "Ajouter un Produit"
-      }}
-    </button>
+        {{
+          showForm ? "Annuler" : isEditing ? "Modifier un Produit" : "Ajouter un Produit"
+        }}
+      </button>
     </div>
-
-   
 
     <div class="form-container" v-if="showForm">
       <div class="form_cont">
         <h2>{{ isEditing ? "Modifier le Produit" : "Ajouter un Produit" }}</h2>
         <form @submit.prevent="isEditing ? updateProduct() : addProduct()">
           <div>
-              <input v-model="newProduct.name" placeholder="Désignation" required />
-              <!-- <span v-if="errors.name" class="error">{{ errors.name }}</span>-->
+            <input v-model="newProduct.name" placeholder="Désignation" required />
           </div>
           <div>
-              <input v-model="newProduct.reference" placeholder="Référence" required />
+            <select v-model="newProduct.category" required>
+              <option disabled value="">Sélectionnez une catégorie</option>
+              <option value="Sodas">Sodas</option>
+              <option value="Jus de fruits">Jus de fruits</option>
+              <option value="Eaux">Eaux</option>
+              <option value="Boissons énergétiques">Boissons énergétiques</option>
+              <option value="Thés">Thés</option>
+              <option value="Cafés">Cafés</option>
+              <option value="Boissons lactées">Boissons lactées</option>
+              <option value="Cocktails">Cocktails</option>
+              <option value="Bières">Bières</option>
+              <option value="Vins">Vins</option>
+              <option value="Boissons sans alcool">Boissons sans alcool</option>
+            </select>
           </div>
           <div>
-              <input
-                v-model="newProduct.quantity"
-                type="number"
-                placeholder="Quantité"
-                required
-              />
+            <input v-model="newProduct.quantity" type="number" placeholder="Quantité" required />
           </div>
           <div>
-              <input
-                v-model="newProduct.price"
-                type="number"
-                placeholder="Prix Unitaire"
-                required
-              />
+            <input v-model="newProduct.price" type="number" placeholder="Prix Unitaire" required />
           </div>
           <div>
-              <input
-                v-model="newProduct.importDate"
-                type="date"
-                placeholder="Date d'Importation"
-                required
-              />
+            <input v-model="newProduct.importDate" type="date" placeholder="Date d'Importation" required />
           </div>
           <div>
-              <input
-                v-model="newProduct.expirationDate"
-                type="date"
-                placeholder="Date d'Expiration"
-                required
-              />
+            <input v-model="newProduct.expirationDate" type="date" placeholder="Date d'Expiration" required />
           </div>
           <div class="btn_sect" style="display: flex; margin-top: 20px; justify-content: space-around; width: 100%">
             <button type="submit" class="button btn-ajouter">
               {{ isEditing ? "Mettre à Jour" : "Ajouter le Produit" }}
             </button>
-            <button
-              @click="close"
-              style="background-color: red"
-              type="submit"
-              class="button btn-ajouter"
-            >
+            <button @click="close" style="background-color: red" type="button" class="button btn-ajouter">
               Annuler
             </button>
           </div>
@@ -79,7 +64,7 @@
           <tr>
             <th>Désignation du Produit</th>
             <th>Quantité</th>
-            <th>Référence</th>
+            <th>Catégorie</th>
             <th>Prix Unitaire</th>
             <th>Date d'Importation</th>
             <th>Date d'Expiration</th>
@@ -87,13 +72,13 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="product in filteredProducts" :key="product.reference">
+          <tr v-for="product in filteredProducts" :key="product.category">
             <td>{{ product.name }}</td>
-            <td>{{ product.quantity }}</td>
-            <td>{{ product.reference }}</td>
+            <td :class="{ 'low-stock': product.quantity < 30 }">{{ product.quantity }}</td>
+            <td>{{ product.category }}</td>
             <td>{{ product.price }} MAD</td>
             <td>{{ product.importDate }}</td>
-            <td>{{ product.expirationDate }}</td>
+            <td :class="{ 'expired': isExpired(product.expirationDate) }">{{ product.expirationDate }}</td>
             <td>
               <button class="button btn-modifier" @click="editProduct(product)">
                 Modifier
@@ -122,7 +107,7 @@ export default {
       newProduct: {
         name: "",
         quantity: "",
-        reference: "",
+        category: "",
         price: "",
         importDate: "",
         expirationDate: "",
@@ -140,7 +125,7 @@ export default {
   },
   methods: {
     toggleForm() {
-      this.showForm = true;
+      this.showForm = !this.showForm;
       if (!this.showForm) {
         this.resetForm(); // Réinitialise le formulaire si on le masque
       }
@@ -150,9 +135,11 @@ export default {
     },
     addProduct() {
       this.products.push({ ...this.newProduct });
+      this.checkNotifications(this.newProduct);
       this.notification = "Produit ajouté avec succès !";
       this.resetForm();
       this.showForm = false;
+      this.autoHideNotification(); // Appeler la fonction pour masquer la notification après un certain temps
     },
     editProduct(product) {
       this.newProduct = { ...product };
@@ -161,36 +148,57 @@ export default {
     },
     updateProduct() {
       const index = this.products.findIndex(
-        (p) => p.reference === this.newProduct.reference
+        (p) => p.category === this.newProduct.category
       );
       if (index !== -1) {
         this.products.splice(index, 1, { ...this.newProduct });
+        this.checkNotifications(this.newProduct);
         this.notification = "Produit mis à jour avec succès !";
         this.resetForm();
         this.showForm = false;
         this.isEditing = false;
+        this.autoHideNotification(); // Masquer la notification après un certain temps
       }
     },
     deleteProduct(product) {
-      this.products = this.products.filter((p) => p.reference !== product.reference);
+      this.products = this.products.filter((p) => p.category !== product.category);
       this.notification = "Produit supprimé avec succès !";
+      this.autoHideNotification(); // Masquer la notification après un certain temps
     },
     resetForm() {
       this.newProduct = {
         name: "",
         quantity: "",
-        reference: "",
+        category: "",
         price: "",
         importDate: "",
         expirationDate: "",
       };
       this.isEditing = false; // Réinitialise le mode d'édition
     },
+    isExpired(expirationDate) {
+      return new Date(expirationDate) < new Date(); // Vérifie si la date est dépassée
+    },
+    checkNotifications(product) {
+      if (product.quantity < 30) {
+        this.notification = `${product.name} a un stock faible !`;
+      }
+      if (this.isExpired(product.expirationDate)) {
+        this.notification = `${product.name} est périmé !`;
+      }
+    },
+    autoHideNotification() {
+      setTimeout(() => {
+        this.notification = ""; // Réinitialiser la notification après 3 secondes
+      }, 3000);
+    },
   },
 };
 </script>
 
 <style scoped>
+
+
 .stock-manager {
   width: 100%;
   background-color: #f4f4f4;
@@ -345,4 +353,17 @@ h3 {
     outline: none;
     border-bottom: 1px solid #0606068a;
 }
+
+
+/* Styles précédents ici... */
+
+.stock-manager {
+  width: 100%;
+  background-color: #f4f4f4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Autres styles... */
 </style>

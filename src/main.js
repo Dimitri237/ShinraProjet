@@ -6,6 +6,7 @@ import StockPage from './components/StockPage.vue';
 import AuthPage from './components/AuthPage.vue';
 import PageCompte from './components/PageCompte.vue';
 import LoadingPage from './components/LoadingPage.vue';
+import EvenPage from './components/EvenPage.vue';
 
 const routes = [
   { path: '/HelloWorld', component: HelloWorld },
@@ -13,6 +14,10 @@ const routes = [
     path: '/StockPage',
     name: 'StockPage',
     component: StockPage
+  },
+  {
+    path: '/EvenPage',component: EvenPage,
+    name: 'EvenPage'
   },
   { path: '/', component: LoadingPage },
   {

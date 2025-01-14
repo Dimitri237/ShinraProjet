@@ -96,18 +96,20 @@
       <div class="page" v-if="currentPage === 'process'">3</div>
       <div class="page" v-if="currentPage === 'factures'">4</div>
       <div class="page" v-if="currentPage === 'profil'">5</div>
-      <div class="page" v-if="currentPage === 'stocks'">6</div>
+      <div class="page" v-if="currentPage === 'stocks'">EvenPage</div>
     </div>
   </div>
 </template>
 
 <script>
 import PageCompte from "./PageCompte.vue";
+import EvenPage from "./EvenPage.vue"; 
 import StockPage from "./StockPage.vue";
 export default {
   components: {
     StockPage,
-    PageCompte
+    PageCompte,
+    EvenPage
     
   },
   data() {
